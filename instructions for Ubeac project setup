@@ -1,0 +1,68 @@
+for this test, I used the pi imager to flash an SD card with the raspbian buster image with no Desktop(RASPBERRY PY OS LITE(LEGACY)), it should still work on any other raspbian though!!!
+
+
+connections 
+
+    RELAY BOARD
+IN1 >> GPIO26 (PIN 37)
+IN2 >> GPIO19 (PIN 35)
+IN3 >> GPIO6  (PIN 31)
+IN4 >> GPIO5  (PIN 29)    
+
+    NOKIA 5110 LCD
+RST >> GPIO24 (PIN 18)    
+CE  >> GPIO8  (PIN 24)    
+DC  >> GPIO23 (PIN 16)    
+DI  >> GPIO10 (PIN 19)    
+CLK >> GPIO11 (PIN 23)    
+VCC >> 3V3    (PIN 01)    
+BL  >> GPIO18 (PIN 12)    
+GND >> GND    (PIN 30)    
+   
+      ADS1015
+VCC >> 3V3    (PIN 17)
+GND >> GND    (PIN 34)
+SDA >> GPIO2  (PIN 03)
+SCL >> GPIO3  (PIN 05)   
+	
+    COMMAND LINE STEPS TO CONFIGURE AND PROPERLY INSTALL THE DEPENDENCIES 
+        	
+sudo raspi-config 
+>> go to inteface options 
+>> enable SPI 
+>> enable SSH
+
+!! also ensure your raspberry PI is connected to the internet !! 
+
+sudo apt-get install git
+sudo apt-get install python3-pip
+pip3 install Adafruit-Blinka
+
+pip install adafruit-circuitpython-pcd8544
+sudo apt-get install python3-pil
+sudo pip3 install adafruit-circuitpython-ads1x15
+
+
+UBEAC SETUP INSTRUCTIONS
+Create a uBeac account 
+create a new project 
+add a gateway 
+select uBeac  multiple sensors in the general tab and also add a unique  identifier in this case we used ITFV2 
+go to HTTP/MQTT tab and enable HTTP
+Submit
+
+create a device and add names and tags as appropriate
+go tho the sensors tab and create a sensor and select the properties 
+submit
+
+go to dashboard and create a dashboard 
+edit the dashboard and add a chart 
+connect the data of the chart to the sensor you created 
+save 
+
+go to gateway and copy the url
+also copy the uid of the sensor and the name of the sensor 
+put it in the code 
+
+
+
