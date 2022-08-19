@@ -37,11 +37,14 @@ sudo raspi-config
 sudo apt-get update
 sudo apt-get install git
 sudo apt-get install python3-pip
+sudo apt-get install minicom
+python -m pip3 install pyserial
 sudo apt-get install build-essential python-dev python-smbus python-pip
 pip3 install Adafruit-Blinka
 
 pip install adafruit-circuitpython-pcd8544
 sudo apt-get install python3-pil
+
 
 
 
@@ -66,5 +69,18 @@ go to gateway and copy the url
 also copy the uid of the sensor and the name of the sensor 
 put it in the code 
 
+LAUNCHING THE CODE 
+Currently its set by default to run with the ADS1015 ADC module
+but the arduino functionality is still availale
+you can change the readAnalog() function to readAnalog1() in line 104 
 
+cd ~
+
+mkdir project 
+
+git clone https://github.com/danielfishbone/ITF-V2.git
+
+cd ITF-V2/
+
+python3 main.py
 
