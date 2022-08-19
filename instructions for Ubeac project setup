@@ -3,13 +3,13 @@ for this test, I used the pi imager to flash an SD card with the raspbian buster
 
 connections 
 
-    RELAY BOARD
+        RELAY BOARD
 IN1 >> GPIO26 (PIN 37)
 IN2 >> GPIO19 (PIN 35)
 IN3 >> GPIO6  (PIN 31)
 IN4 >> GPIO5  (PIN 29)    
 
-    NOKIA 5110 LCD
+        NOKIA 5110 LCD
 RST >> GPIO24 (PIN 18)    
 CE  >> GPIO8  (PIN 24)    
 DC  >> GPIO23 (PIN 16)    
@@ -19,11 +19,20 @@ VCC >> 3V3    (PIN 01)
 BL  >> GPIO18 (PIN 12)    
 GND >> GND    (PIN 30)    
    
-      ADS1015
+        ADS1015
 VCC >> 3V3    (PIN 17)
 GND >> GND    (PIN 34)
 SDA >> GPIO2  (PIN 03)
-SCL >> GPIO3  (PIN 05)   
+SCL >> GPIO3  (PIN 05)  
+
+        POTENTIOMETER
+POTENTIOMETER WIPERPIN >> ADS1015 A0 
+ONE OF THE OTHER TWO PINS  >> GND
+ONE OF THE OTHER TWO PINS  >> 3V3
+
+        L293D
+
+        
 	
     COMMAND LINE STEPS TO CONFIGURE AND PROPERLY INSTALL THE DEPENDENCIES 
         	
