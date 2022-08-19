@@ -3,15 +3,12 @@ import busio
 import digitalio
 from PIL import Image, ImageDraw, ImageFont
 import adafruit_pcd8544
-from time import sleep
 import time
-import json
 import requests
 from random import randint
 from module import Motor,Relay
-import string
-import json
 import serial
+import Adafruit_ADS1x15
 
 url = "http://itfiot.hub.ubeac.io/ITFV2"
 uid ="POT"
@@ -20,6 +17,8 @@ timeout =2 #seconds
 line1 = "Welcome"
 line2 ="Line 2"
 line3 = "Line 3"
+
+adc = Adafruit_ADS1x15.ADS1015()
 
 motor=Motor(17,27,22) 
 
@@ -48,44 +47,48 @@ backlight.value = True
 display.fill(0)
 display.show()
 font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", fontSize)
-count = 0
 potentiometer = 0
 
 def readAnalog():
-    maxVal = 1023
-    
-    return maxVal 
+    maxVal = 32767
+    GAIN=1
+    newdata = adc.read_adc(0, gain=GAIN)
+    val = int(newdata)
+    mapped =(100 * val)/( maxVal )
+    return mapped
 
 def readAnalog1():
-    maxVal =4095
+    maxVal =1023
     port = "/dev/serial0" 
     ser=serial.Serial(port,baudrate=9600,timeout =3)
     newdata=ser.readline()
-    val = int(newdata)
-    mapped =(100 * val)/(100 + maxVal - val )
-    return mapped
+    newdata =str(newdata)
+    a= newdata.find("{") 
+    b = newdata.find("}")
+    newdata =newdata[a+1:b]
+    try:
+        val = int(newdata)
+        mapped =(100 * val)/( maxVal )
+        return mapped
+    except :
+        print('Error')
+        return -1
 
-def main():
-        motor.move(1,0.75)
-        sleep(2)
-        motor.move()
-        sleep(1)
-        motor.move(-1,0.50)
-        sleep(2)
+
 def post(potentiometer):
     try:
     
-        potentiometer = randint(0,100) 
+#        potentiometer = randint(0,100) 
         data = {
                 "id": uid,
                 "sensors":[{
-                  'id': 'POT',
+                  'id': 'ptentiometer',
                   'data': potentiometer
                 }]
             }
-        
+
         r = requests.post(url, verify=False, json=data)
-        print(r.status_code) 
+       # print(r.status_code) 
     except KeyboardInterrupt:
         pass
 lastTime = time.time()
@@ -95,7 +98,7 @@ while True:
 # Make sure to create image with mode '1' for 1-bit color.
 
     val = readAnalog()
-    line1 = "potentiometer is "+str(val)+"%"
+    line1 = "POT is "+str(val)+"%"
 
     if val <=15:
         motor.move(-1,100)
@@ -155,7 +158,8 @@ while True:
         D.on()
         line2 = "Motor: Stopped"
         line3 = "Relay: All are ON"
-
+    if val != -1:
+        post(val)
 
     image = Image.new("1", (display.width, display.height))
 
@@ -164,17 +168,13 @@ while True:
 
 # Draw Some Text
 
-    line1 = "Fishbone"
-    line2 ="Has Suffered!"
-    line3 = str(count)
-
     (font_width, font_height) = font.getsize(line1)
     draw.text(
         (20,0),
         line1,
         font=font,
         fill=255,
-        align="center",
+        
     )
     (font_width, font_height) = font.getsize(line2)
     draw.text(
@@ -190,9 +190,8 @@ while True:
         font=font,
         fill=255,
     )
-    count += 1
-    #line3 = str(count)
-#    sleep(1)
+
+
 # Display image
     display.image(image)
     display.show()
