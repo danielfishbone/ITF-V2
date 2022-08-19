@@ -34,7 +34,7 @@ dc = digitalio.DigitalInOut(board.D23)  # data/command
 cs = digitalio.DigitalInOut(board.CE0)  # Chip select
 reset = digitalio.DigitalInOut(board.D24)  # reset
 display = adafruit_pcd8544.PCD8544(spi, dc, cs, reset)
-fontSize = 10
+fontSize = 15
 
 # Contrast and Brightness Settings
 display.bias = 4
@@ -102,7 +102,7 @@ while True:
 # Make sure to create image with mode '1' for 1-bit color.
 
     val = readAnalog()
-    line1 = "POT is "+str(val)+"%"
+    line1 = "POT is "+str(int(val))+"%"
 
     if val <=15:
         motor.move(-1,100)
@@ -174,7 +174,7 @@ while True:
 
     (font_width, font_height) = font.getsize(line1)
     draw.text(
-        (20,0),
+        (0,0),
         line1,
         font=font,
         fill=255,

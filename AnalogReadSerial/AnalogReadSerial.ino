@@ -24,7 +24,11 @@ void setup() {
 
 // the loop routine runs over and over again forever:
 void loop() {
-  int sensorValue = analogRead(A0);
+  unsigned long sensorValue = 0;
+  for(int i = 0; i<100; i++){
+   sensorValue += analogRead(A0);
+   }
+   sensorValue /= 100;
   Serial.println(sensorValue);
   String valu = "{";
   valu += String(sensorValue); 

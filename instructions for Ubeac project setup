@@ -34,13 +34,15 @@ sudo raspi-config
 
 !! also ensure your raspberry PI is connected to the internet !! 
 
+sudo apt-get update
 sudo apt-get install git
 sudo apt-get install python3-pip
+sudo apt-get install build-essential python-dev python-smbus python-pip
 pip3 install Adafruit-Blinka
 
 pip install adafruit-circuitpython-pcd8544
 sudo apt-get install python3-pil
-sudo pip3 install adafruit-circuitpython-ads1x15
+
 
 
 UBEAC SETUP INSTRUCTIONS
