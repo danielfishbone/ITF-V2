@@ -8,7 +8,8 @@ import requests
 from random import randint
 from module import Motor,Relay
 import serial
-import Adafruit_ADS1x15
+import adafruit_ads1x15.ads1015 as ADS
+from adafruit_ads1x15.analog_in import AnalogIn
 
 url = "http://itfiot.hub.ubeac.io/ITFV2"
 uid ="POT"
@@ -18,7 +19,8 @@ line1 = "Welcome"
 line2 ="Line 2"
 line3 = "Line 3"
 
-adc = Adafruit_ADS1x15.ADS1015()
+i2c = busio.I2C(board.SCL, board.SDA)
+adc = ADS.ADS1015(i2c)
 
 motor=Motor(17,27,22) 
 
@@ -52,7 +54,9 @@ potentiometer = 0
 def readAnalog():
     maxVal = 32767
     GAIN=1
-    newdata = adc.read_adc(0, gain=GAIN)
+    chan = AnalogIn(adc, ADS.P0)
+    newdata = chan.value
+    # newdata = adc.read_adc(0, gain=GAIN)
     val = int(newdata)
     mapped =(100 * val)/( maxVal )
     return mapped
