@@ -143,6 +143,8 @@ while True:
                 motor.move(1,75)
                 B.on()
                 A.off()
+                C.off()
+                D.on()
                 line2 = "Motor: Turns Right"
                 line3 = "Relay: B is ON"
 
@@ -150,6 +152,8 @@ while True:
                 motor.move(-1,75)
                 A.on()
                 B.off()
+                C.off()
+                D.on()
                 line2 = "Motor: Turns Left"
                 line3 = "Relay: A is ON"
             lastTime = time.time()
