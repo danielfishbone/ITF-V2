@@ -163,7 +163,7 @@ while True:
 
     image = Image.new("1", (display.width, display.height))
 
-# Get drawing object to draw on image.
+# Get drawing object to draw on image
     draw = ImageDraw.Draw(image)
 
 # Draw Some Text
