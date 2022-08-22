@@ -144,7 +144,7 @@ while True:
                 B.on()
                 A.off()
                 C.off()
-                D.on()
+                D.off()
                 line2 = "Motor: Turns Right"
                 line3 = "Relay: B is ON"
 
@@ -153,7 +153,7 @@ while True:
                 A.on()
                 B.off()
                 C.off()
-                D.on()
+                D.off()
                 line2 = "Motor: Turns Left"
                 line3 = "Relay: A is ON"
             lastTime = time.time()
